@@ -63,6 +63,9 @@
 @property (nonatomic, assign) BOOL hidden;
 @property (nonatomic, assign) BOOL disallowoverscroll;
 
+@property (nonatomic, copy) NSString* title;
+@property (nonatomic, copy) NSString* navcolor;
+
 + (CDVInAppBrowserOptions*)parseOptions:(NSString*)options;
 
 @end

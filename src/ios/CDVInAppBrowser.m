@@ -229,6 +229,37 @@
 
     __block CDVInAppBrowserNavigationController* nav = [[CDVInAppBrowserNavigationController alloc]
                                    initWithRootViewController:self.inAppBrowserViewController];
+
+    CGRect statusBarFrame = [UIApplication sharedApplication].statusBarFrame;
+	
+	UIView  * barFiller = [[UIView alloc]initWithFrame:statusBarFrame];
+	
+	unsigned int rgbValue = 0;
+	NSScanner* scanner;
+	if(self.inAppBrowserViewController.color == nil) {
+		scanner = [NSScanner scannerWithString:@"#000000"];
+	}else{
+		scanner = [NSScanner scannerWithString:self.inAppBrowserViewController.color];
+	}
+	
+	[scanner setScanLocation:1];
+	[scanner scanHexInt:&rgbValue];
+	
+	UIColor* barColor = [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+
+	barFiller.backgroundColor = barColor;
+	
+	
+	barFiller.backgroundColor = barColor;
+	barFiller.opaque = YES;
+	[nav.view addSubview:barFiller];
+    nav.orientationDelegate = self.inAppBrowserViewController;
+	nav.navigationBar.barTintColor = barColor;
+	nav.navigationBar.translucent = NO;
+	nav.navigationBar.tintColor = [UIColor whiteColor];
+	[nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
+
+
     nav.orientationDelegate = self.inAppBrowserViewController;
     nav.navigationBarHidden = YES;
 
@@ -530,6 +561,21 @@
     self.webView.opaque = YES;
     self.webView.scalesPageToFit = NO;
     self.webView.userInteractionEnabled = YES;
+
+    unsigned int rgbValue = 0;
+	NSScanner* scanner;
+	if(self.color == nil) {
+		scanner = [NSScanner scannerWithString:@"#0FBA99"];
+	}else{
+		scanner = [NSScanner scannerWithString:self.color];
+	}
+	[scanner setScanLocation:1];
+	[scanner scanHexInt:&rgbValue];
+	
+	UIColor* barColor = [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+
+	self.toolbar.barTintColor = barColor;
+
 
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     self.spinner.alpha = 1.000;
@@ -957,6 +1003,8 @@
         self.toolbarposition = kInAppBrowserToolbarBarPositionBottom;
         self.clearcache = NO;
         self.clearsessioncache = NO;
+        self.title = nil;
+        self.navcolor = nil;
 
         self.enableviewportscale = NO;
         self.mediaplaybackrequiresuseraction = NO;
