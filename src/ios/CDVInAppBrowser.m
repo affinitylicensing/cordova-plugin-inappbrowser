@@ -200,6 +200,10 @@
             }
         }
     }
+	
+	if(browserOptions.title != nil){
+		self.inAppBrowserViewController.title = browserOptions.title;
+	}
 
     // UIWebView options
     self.inAppBrowserViewController.webView.scalesPageToFit = browserOptions.enableviewportscale;
