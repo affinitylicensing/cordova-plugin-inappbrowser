@@ -264,7 +264,7 @@
 	nav.navigationBar.translucent = NO;
 	nav.navigationBar.tintColor = [UIColor whiteColor];
 	[nav.navigationBar setTitleTextAttributes:@{NSForegroundColorAttributeName: [UIColor whiteColor]}];
-
+    nav.navigationBar.barStyle = UIBarStyleBlack;
 
     nav.orientationDelegate = self.inAppBrowserViewController;
 
