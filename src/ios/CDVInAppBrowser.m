@@ -263,7 +263,6 @@
 
 
     nav.orientationDelegate = self.inAppBrowserViewController;
-    nav.navigationBarHidden = YES;
 
     __weak CDVInAppBrowser* weakSelf = self;
 
@@ -564,19 +563,7 @@
     self.webView.scalesPageToFit = NO;
     self.webView.userInteractionEnabled = YES;
 
-    unsigned int rgbValue = 0;
-	NSScanner* scanner;
-	if(self.color == nil) {
-		scanner = [NSScanner scannerWithString:@"#0FBA99"];
-	}else{
-		scanner = [NSScanner scannerWithString:self.color];
-	}
-	[scanner setScanLocation:1];
-	[scanner scanHexInt:&rgbValue];
 	
-	UIColor* barColor = [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
-
-	self.toolbar.barTintColor = barColor;
 
 
     self.spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -617,6 +604,21 @@
     self.toolbar.multipleTouchEnabled = NO;
     self.toolbar.opaque = NO;
     self.toolbar.userInteractionEnabled = YES;
+	
+	unsigned int rgbValue = 0;
+	NSScanner* scanner;
+	if(self.color == nil) {
+		scanner = [NSScanner scannerWithString:@"#0FBA99"];
+	}else{
+		scanner = [NSScanner scannerWithString:self.color];
+	}
+	[scanner setScanLocation:1];
+	[scanner scanHexInt:&rgbValue];
+	
+	UIColor* barColor = [UIColor colorWithRed:((rgbValue & 0xFF0000) >> 16)/255.0 green:((rgbValue & 0xFF00) >> 8)/255.0 blue:(rgbValue & 0xFF)/255.0 alpha:1.0];
+	
+	self.toolbar.barTintColor = barColor;
+	
 
     CGFloat labelInset = 5.0;
     float locationBarY = toolbarIsAtBottom ? self.view.bounds.size.height - FOOTER_HEIGHT : self.view.bounds.size.height - LOCATIONBAR_HEIGHT;
